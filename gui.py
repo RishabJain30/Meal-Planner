@@ -9,8 +9,7 @@ import c11trial_3
 import d12trial_4
 
 def suggest(has_diabetes):
-    # Your code to calculate delay here
-    # return a_star.a_star_search(origin, destination, cities, airports)
+
     results_1,int1 = a9trial_1.run_recommendations(5,has_diabetes)
     results_2,int2 = b10trial_2.run_recommendations(5,has_diabetes)
     results_3,int3 = c11trial_3.run_recommendations(5,has_diabetes)
@@ -33,7 +32,6 @@ def suggest(has_diabetes):
 choice = ['yes','no']
 def button_click():
     has_diabetes = ans.get()
-    # destination = dest_var.get()
     answer = suggest(has_diabetes)
     print("Suggested recipe: ", end=" ")
     for i in range(5):  # Assuming you want to display the first 5 recipes
@@ -44,7 +42,6 @@ def button_click():
 root = tk.Tk()
 root.title("recipe suggestor")
 root.geometry("1200x800")
-# root.attributes('-fullscreen', True)
 root.resizable(False, False)
 root.configure(bg="#f2f2f2")
 
