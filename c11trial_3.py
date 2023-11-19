@@ -6,27 +6,6 @@ from collections import deque
 data = pd.read_csv('epi_r.csv', engine='python')
 data = data[['title', 'rating', 'calories', 'protein', 'fat', 'sodium']]
 data.dropna(inplace=True)
-data['protein'] = pd.to_numeric(data['protein'], errors='coerce')
-data['calories'] = pd.to_numeric(data['calories'], errors='coerce')
-data['sodium'] = pd.to_numeric(data['sodium'], errors='coerce')
-
-def calculate_bmi(height, weight):
-    # BMI formula: BMI = weight (kg) / (height (m))^2
-    height_meters = height / 100  # Convert height from cm to meters
-    bmi = weight / (height_meters ** 2)
-    return bmi
-
-def suggest_diet_based_on_bmi_and_age(bmi, age):
-    if bmi < 19:
-        return "high calorie food with high protein and decent fats"
-    elif 25 <= bmi < 30:
-        return "healthy diet with moderate calories and less fats"
-    elif bmi >= 30:
-        return "less calorie, less fat, and high protein diet"
-    elif age > 60:
-        return "diet with less calories for people over the age of 60"
-    else:
-        return "standard diet"
 
 def evaluate_healthiness_with_diabetes_bmi_age(recipe, has_diabetes):
     sodium_weight = 0.2
@@ -94,12 +73,7 @@ def run_recommendations(num_iterations,has_diabetes):
         initial_recipe = random.choice(data['title'].tolist())
         max_depth = 5
 
-        # User input for diabetes status
-        # diabetes_status = input("Do you have diabetes? (yes/no): ").lower()
-        # has_diabetes = 0 == i%2
-
         # Run DFS recommendation
-        # visited_recipes.add(initial_recipe)
         initial_recipe_row = data[data['title'] == initial_recipe].iloc[0]
         recommended_recipe, healthiness = greedy_best_first_search_recommend_with_diabetes_bmi_age_and_index(data, initial_recipe_row, max_depth, has_diabetes,visited_recipes)
         total_healthiness+=healthiness
@@ -116,12 +90,3 @@ def run_recommendations(num_iterations,has_diabetes):
         results.append(result)
 
     return results,total_healthiness
-
-# Run recommendations 50 times
-# num_iterations = 20
-# results_df = run_recommendations(num_iterations)
-
-# # Save results to an Excel file
-# excel_file_path = 'recommendation_results_3.xlsx'
-# results_df.to_excel(excel_file_path, index=False)
-# print(f"\nResults saved to {excel_file_path}")
