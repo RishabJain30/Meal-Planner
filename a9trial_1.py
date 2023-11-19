@@ -5,26 +5,6 @@ import random
 data = pd.read_csv('epi_r.csv', engine='python')
 data = data[['title', 'rating', 'calories', 'protein', 'fat', 'sodium']]
 data.dropna(inplace = True)
-# print(data.head())
-data['protein'] = pd.to_numeric(data['protein'], errors='coerce')
-data['calories'] = pd.to_numeric(data['calories'], errors='coerce')
-data['sodium'] = pd.to_numeric(data['sodium'], errors='coerce')
-
-def calculate_bmi(height, weight):
-    # BMI formula: BMI = weight (kg) / (height (m))^2
-    height_meters = height / 100  # Convert height from cm to meters
-    bmi = weight / (height_meters ** 2)
-    return bmi
-
-# def evaluate_healthiness_with_diabetes(recipe, has_diabetes):
-#     # Modify the healthiness metric based on whether the person has diabetes or not
-#     healthiness = recipe['protein'] - recipe['calories'] + recipe['sodium']
-    
-#     # Adjust healthiness score for people with diabetes
-#     if has_diabetes:
-#         healthiness -= recipe['calories']  # Adjust as needed based on your criteria for diabetes-friendly meals
-    
-#     return healthiness
 
 def evaluate_healthiness_with_diabetes(recipe, has_diabetes):
     # Define weights for each parameter (you can adjust these based on importance)
@@ -73,23 +53,6 @@ def dfs_recommend_with_diabetes(data, current_recipe, visited, max_depth, has_di
     visited.add(best_recipe['title'])
     return best_recipe, best_healthiness
 
-# # Set parameters
-# initial_recipe = random.choice(data['title'].tolist())
-# max_depth = 5
-
-# # User input for diabetes status
-# diabetes_status = input("Do you have diabetes? (yes/no): ").lower()
-# has_diabetes = diabetes_status == 'yes'
-
-# # Run DFS recommendation
-# visited_recipes = set()
-# visited_recipes.add(initial_recipe)
-# initial_recipe_row = data[data['title'] == initial_recipe].iloc[0]
-# recommended_recipe, healthiness = dfs_recommend_with_diabetes(data, initial_recipe_row, visited_recipes, max_depth, has_diabetes)
-
-# print(f"Recommended Recipe: {recommended_recipe['title']}")
-# print(f"Healthiness Score: {healthiness}")
-
 def run_recommendations(num_iterations,has_diabetes):
     results = []
     total_healthiness=0
@@ -101,10 +64,6 @@ def run_recommendations(num_iterations,has_diabetes):
         # Set parameters
         initial_recipe = random.choice(data['title'].tolist())
         max_depth = 5
-
-        # User input for diabetes status
-        # diabetes_status = input("Do you have diabetes? (yes/no): ").lower()
-        # has_diabetes = 0 == i%2
 
         # Run DFS recommendation
         visited_recipes.add(initial_recipe)
@@ -124,13 +83,4 @@ def run_recommendations(num_iterations,has_diabetes):
         }
         results.append(result)
 
-    # return pd.DataFrame(results)
     return results,total_healthiness
-# Run recommendations 50 times
-# num_iterations = 20
-# results_df = run_recommendations(num_iterations)
-
-# Save results to an Excel file
-# excel_file_path = 'recommendation_results_1.xlsx'
-# results_df.to_excel(excel_file_path, index=False)
-# print(f"\nResults saved to {excel_file_path}")
