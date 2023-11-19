@@ -1,4 +1,10 @@
 # Recipe Suggestor AI Project
+Team Members ID	Names	Email-ID
+|   Team Members ID   | Names                |Email-ID                              |
+| ------------------- | -------------------- | ------------------------------------ |
+| 2021A8PS3185H       | Nitish Brat Das      |f20213185@hyderabad.bits-pilani.ac.in |
+| 2021A8PS1073H       | Rishab Jain          |f20211073@hyderabad.bits-pilani.ac.in |
+| 2021A1PS2895H       | Ruqqyah Killedar     |f20212895@hyderabad.bits-pilani.ac.in |
 
 ## Overview
 
