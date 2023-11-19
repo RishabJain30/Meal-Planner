@@ -38,10 +38,6 @@ def button_click():
     print("Suggested recipe: ", end=" ")
     for i in range(5):  # Assuming you want to display the first 5 recipes
         recipe_label.config(text="{}".format(answer[i]['Recommended Recipe']))
-    # You might want to add logic here to handle the display, e.g., update a label for each recipe
-    # ...
-
-    # If you want to concatenate all recipes into one label, you can use a different approach
     all_recipes_text = "\n".join(answer[i]['Recommended Recipe'] for i in range(5))
     recipe_label.config(text=all_recipes_text)
 
@@ -65,6 +61,5 @@ button.place(relx=0.5, rely=0.6, anchor="center")
 
 recipe_label = ttk.Label(root, text=" ", background="#f2f2f2", foreground="#000000", font=("Helvetica", 16))
 recipe_label.place(relx=0.5, rely=0.8, anchor="center")
-# dest_var = tk.StringVar(value=cities[1])
 
 root.mainloop()
