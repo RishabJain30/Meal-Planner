@@ -6,11 +6,6 @@ data = pd.read_csv('epi_r.csv', engine='python')
 data = data[['title', 'rating', 'calories', 'protein', 'fat', 'sodium']]
 data.dropna(inplace=True)
 
-data['protein'] = pd.to_numeric(data['protein'], errors='coerce')
-data['calories'] = pd.to_numeric(data['calories'], errors='coerce')
-data['sodium'] = pd.to_numeric(data['sodium'], errors='coerce')
-
-
 def calculate_fitness(position, has_diabetes):
     recipe = data.iloc[position]
     # Minimize the calorie content directly
@@ -100,13 +95,6 @@ def run_recommendations(num_iterations,has_diabetes):
         max_iterations = 3000
         swarm_size = 10
 
-        # User input for diabetes status
-        # diabetes_status = input("Do you have diabetes? (yes/no): ").lower()
-        # has_diabetes = 0 == i%2
-
-        # Run DFS recommendation
-        # visited_recipes.add(initial_recipe)
-        # initial_recipe_row = data[data['title'] == initial_recipe].iloc[0]
         recommended_recipe, healthiness = pso_recommend_with_diabetes(data, max_iterations, swarm_size, has_diabetes)
         total_healthiness+=healthiness
         result = {
@@ -122,12 +110,3 @@ def run_recommendations(num_iterations,has_diabetes):
         results.append(result)
 
     return results,total_healthiness
-
-# Run recommendations 50 times
-# num_iterations = 20
-# results_df = run_recommendations(num_iterations)
-
-# # Save results to an Excel file
-# excel_file_path = 'recommendation_results_4.xlsx'
-# results_df.to_excel(excel_file_path, index=False)
-# print(f"\nResults saved to {excel_file_path}")
