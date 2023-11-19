@@ -6,15 +6,6 @@ from collections import deque
 data = pd.read_csv('epi_r.csv', engine='python')
 data = data[['title', 'rating', 'calories', 'protein', 'fat', 'sodium']]
 data.dropna(inplace=True)
-data['protein'] = pd.to_numeric(data['protein'], errors='coerce')
-data['calories'] = pd.to_numeric(data['calories'], errors='coerce')
-data['sodium'] = pd.to_numeric(data['sodium'], errors='coerce')
-
-def calculate_bmi(height, weight):
-    # BMI formula: BMI = weight (kg) / (height (m))^2
-    height_meters = height / 100  # Convert height from cm to meters
-    bmi = weight / (height_meters ** 2)
-    return bmi
 
 def evaluate_healthiness_with_diabetes_bmi(recipe, has_diabetes):
     # Define weights for each parameter (you can adjust these based on importance)
@@ -44,7 +35,6 @@ def evaluate_healthiness_with_diabetes_bmi(recipe, has_diabetes):
 
 def bfs_recommend_with_diabetes_bmi_and_index(data, initial_recipe, max_depth, has_diabetes,visited):
     queue = deque([(initial_recipe, 0)])  # Queue of (recipe, depth)
-    # visited = set()
 
     best_recipe = initial_recipe
     best_healthiness = evaluate_healthiness_with_diabetes_bmi(initial_recipe, has_diabetes)
@@ -71,7 +61,6 @@ def bfs_recommend_with_diabetes_bmi_and_index(data, initial_recipe, max_depth, h
     visited.add(best_recipe['title'])
     return best_recipe, best_healthiness, 0
 
-
 def run_recommendations(num_iterations,has_diabetes):
     results = []
     total_healthiness=0
@@ -84,10 +73,6 @@ def run_recommendations(num_iterations,has_diabetes):
         # Set parameters
         initial_recipe = random.choice(data['title'].tolist())
         max_depth = 5
-
-        # User input for diabetes status
-        # diabetes_status = input("Do you have diabetes? (yes/no): ").lower()
-        # has_diabetes = 0 == i%2
 
         # Run DFS recommendation
         visited_recipes.add(initial_recipe)
@@ -107,12 +92,3 @@ def run_recommendations(num_iterations,has_diabetes):
         results.append(result)
 
     return results,total_healthiness
-
-# Run recommendations 50 times
-# num_iterations = 20
-# results_df = run_recommendations(num_iterations)
-
-# # Save results to an Excel file
-# excel_file_path = 'recommendation_results_2.xlsx'
-# results_df.to_excel(excel_file_path, index=False)
-# print(f"\nResults saved to {excel_file_path}")
